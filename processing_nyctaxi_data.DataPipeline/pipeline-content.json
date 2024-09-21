@@ -2,7 +2,18 @@
   "properties": {
     "activities": [
       {
+        "name": "Copy to staging",
         "type": "Copy",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": true,
+          "secureInput": true
+        },
         "typeProperties": {
           "source": {
             "type": "ParquetSource",
@@ -15,32 +26,32 @@
               "type": "ParquetReadSettings"
             },
             "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "Project_Lakehouse",
+                "properties": {
+                  "annotations": [],
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f",
+                    "artifactId": "56cf4bb1-adad-4345-94b3-37c1337b1d8a",
+                    "rootFolder": "Files"
+                  }
+                }
+              },
               "type": "Parquet",
               "typeProperties": {
                 "location": {
                   "type": "LakehouseLocation",
-                  "folderPath": "NYC_Yellow_Taxi_Data",
                   "fileName": {
                     "value": "@concat('yellow_tripdata_',variables('v_date'),'.parquet')\n",
                     "type": "Expression"
-                  }
+                  },
+                  "folderPath": "NYC_Yellow_Taxi_Data"
                 },
                 "compressionCodec": "snappy"
               },
-              "schema": [],
-              "linkedService": {
-                "properties": {
-                  "type": "Lakehouse",
-                  "typeProperties": {
-                    "artifactId": "6411e00d-e383-47b5-befd-fabf6df84b19",
-                    "workspaceId": "00000000-0000-0000-0000-000000000000",
-                    "rootFolder": "Files"
-                  },
-                  "annotations": []
-                },
-                "name": "Project_Lakehouse"
-              },
-              "annotations": []
+              "schema": []
             }
           },
           "sink": {
@@ -50,27 +61,28 @@
             "copyCommandSettings": {},
             "disableMetricsCollection": false,
             "datasetSettings": {
+              "annotations": [],
+              "linkedService": {
+                "name": "Project_Warehouse",
+                "properties": {
+                  "annotations": [],
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+                    "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+                    "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+                  }
+                }
+              },
               "type": "DataWarehouseTable",
+              "schema": [],
               "typeProperties": {
                 "schema": "staging",
                 "table": "Yellow_Taxi_NYC"
-              },
-              "schema": [],
-              "linkedService": {
-                "properties": {
-                  "type": "DataWarehouse",
-                  "typeProperties": {
-                    "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
-                    "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
-                    "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
-                  },
-                  "annotations": []
-                },
-                "name": "Project_Warehouse"
-              },
-              "annotations": []
+              }
             }
           },
+          "enableStaging": true,
           "translator": {
             "type": "TabularTranslator",
             "typeConversion": true,
@@ -78,21 +90,29 @@
               "allowDataTruncation": true,
               "treatBooleanAsNumber": false
             }
-          },
-          "enableStaging": true
-        },
+          }
+        }
+      },
+      {
+        "name": "Deleting_Outliers",
+        "type": "SqlServerStoredProcedure",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "Set variable1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
         "policy": {
           "timeout": "0.12:00:00",
           "retry": 0,
           "retryIntervalInSeconds": 30,
-          "secureInput": true,
-          "secureOutput": true
+          "secureOutput": false,
+          "secureInput": false
         },
-        "name": "Copy to staging",
-        "dependsOn": []
-      },
-      {
-        "type": "SqlServerStoredProcedure",
         "typeProperties": {
           "storedProcedureName": "[staging].[DELETE_OUTLIERS]",
           "storedProcedureParameters": {
@@ -113,49 +133,24 @@
           }
         },
         "linkedService": {
+          "name": "Project_Warehouse",
+          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
           "properties": {
+            "annotations": [],
             "type": "DataWarehouse",
             "typeProperties": {
-              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
               "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
               "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
-            },
-            "annotations": []
-          },
-          "name": "Project_Warehouse",
-          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b"
-        },
-        "policy": {
-          "timeout": "0.12:00:00",
-          "retry": 0,
-          "retryIntervalInSeconds": 30,
-          "secureInput": false,
-          "secureOutput": false
-        },
-        "name": "Deleting_Outliers",
-        "dependsOn": [
-          {
-            "activity": "Set variable1",
-            "dependencyConditions": [
-              "Succeeded"
-            ]
+            }
           }
-        ]
+        }
       },
       {
-        "type": "SetVariable",
-        "typeProperties": {
-          "variableName": "v_end_date",
-          "value": {
-            "value": "@addToTime(concat(variables('v_date'),'-01'),1,'month') ",
-            "type": "Expression"
-          }
-        },
-        "policy": {
-          "secureInput": false,
-          "secureOutput": false
-        },
         "name": "Set variable1",
+        "type": "SetVariable",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
         "dependsOn": [
           {
             "activity": "Copy to staging",
@@ -163,7 +158,112 @@
               "Succeeded"
             ]
           }
-        ]
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "v_end_date",
+          "value": {
+            "value": "@addToTime(concat(variables('v_date'),'-01'),1,'month') ",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Loading process_log",
+        "type": "SqlServerStoredProcedure",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": [
+          {
+            "activity": "Deleting_Outliers",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[metadata].[inset_processlog]",
+          "storedProcedureParameters": {
+            "pipeline_run_id": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "processed_date": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "table_name": {
+              "value": "Yellow_Taxi_NYC",
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "Project_Warehouse",
+          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+              "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+            }
+          }
+        }
+      },
+      {
+        "name": "Latest_Month_Processed_Data",
+        "type": "Script",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "linkedService": {
+          "name": "Project_Warehouse",
+          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+              "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+            }
+          }
+        },
+        "typeProperties": {
+          "scripts": [
+            {
+              "type": "Query",
+              "text": {
+                "value": "SELECT TOP(1) \nlast_processed_pickup_date\nfrom metadata.process_log\nwhere table_processed='Yellow_Taxi_NYC'\norder by last_processed_pickup_date desc",
+                "type": "Expression"
+              }
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        }
       }
     ],
     "variables": {

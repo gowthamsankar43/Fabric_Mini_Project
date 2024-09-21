@@ -351,6 +351,103 @@
         ]
       },
       {
+        "name": "process_log",
+        "sourceLineageTag": "[metadata].[process_log]",
+        "columns": [
+          {
+            "name": "pipeline_run_id",
+            "dataType": "string",
+            "sourceColumn": "pipeline_run_id",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "pipeline_run_id",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "table_processed",
+            "dataType": "string",
+            "sourceColumn": "table_processed",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "table_processed",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "rows_processed",
+            "dataType": "int64",
+            "sourceColumn": "rows_processed",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "rows_processed",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_processed_pickup_date",
+            "dataType": "dateTime",
+            "sourceColumn": "last_processed_pickup_date",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "last_processed_pickup_date",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "processed_tmstmp",
+            "dataType": "dateTime",
+            "sourceColumn": "processed_tmstmp",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "processed_tmstmp",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Dataset_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "process_log",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "metadata"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
         "name": "taxi_zone_lookup",
         "sourceLineageTag": "[staging].[taxi_zone_lookup]",
         "columns": [
@@ -445,7 +542,7 @@
       },
       {
         "name": "PBI_QueryOrder",
-        "value": "[\"exec_requests_history\",\"long_running_queries\",\"frequently_run_queries\",\"exec_sessions_history\",\"taxi_zone_lookup\",\"Yellow_Taxi_NYC\"]"
+        "value": "[\"exec_requests_history\",\"long_running_queries\",\"frequently_run_queries\",\"exec_sessions_history\",\"taxi_zone_lookup\",\"Yellow_Taxi_NYC\",\"process_log\"]"
       },
       {
         "name": "SourceLineageTagType",
