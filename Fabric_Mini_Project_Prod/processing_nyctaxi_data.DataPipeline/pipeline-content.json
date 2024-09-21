@@ -1,0 +1,179 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "ParquetSource",
+            "storeSettings": {
+              "type": "LakehouseReadSettings",
+              "recursive": true,
+              "enablePartitionDiscovery": false
+            },
+            "formatSettings": {
+              "type": "ParquetReadSettings"
+            },
+            "datasetSettings": {
+              "type": "Parquet",
+              "typeProperties": {
+                "location": {
+                  "type": "LakehouseLocation",
+                  "folderPath": "NYC_Yellow_Taxi_Data",
+                  "fileName": {
+                    "value": "@concat('yellow_tripdata_',variables('v_date'),'.parquet')\n",
+                    "type": "Expression"
+                  }
+                },
+                "compressionCodec": "snappy"
+              },
+              "schema": [],
+              "linkedService": {
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "4453aecd-882d-451d-8786-84d95f561bd0",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Files"
+                  },
+                  "annotations": []
+                },
+                "name": "Project_Lakehouse"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "preCopyScript": "delete from staging.Yellow_Taxi_NYC",
+            "allowCopyCommand": true,
+            "copyCommandSettings": {},
+            "disableMetricsCollection": false,
+            "datasetSettings": {
+              "type": "DataWarehouseTable",
+              "typeProperties": {
+                "schema": "staging",
+                "table": "Yellow_Taxi_NYC"
+              },
+              "schema": [],
+              "linkedService": {
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+                    "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+                  },
+                  "annotations": []
+                },
+                "name": "Project_Warehouse"
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": true,
+          "secureOutput": true
+        },
+        "name": "Copy to staging",
+        "dependsOn": []
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[staging].[DELETE_OUTLIERS]",
+          "storedProcedureParameters": {
+            "end_date": {
+              "value": {
+                "value": "@variables('v_end_date')",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "start_date": {
+              "value": {
+                "value": "@concat(variables('v_date'),'-01')",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            }
+          }
+        },
+        "linkedService": {
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+              "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+            },
+            "annotations": []
+          },
+          "name": "Project_Warehouse",
+          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Deleting_Outliers",
+        "dependsOn": [
+          {
+            "activity": "Set variable1",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "v_end_date",
+          "value": {
+            "value": "@addToTime(concat(variables('v_date'),'-01'),1,'month') ",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Set variable1",
+        "dependsOn": [
+          {
+            "activity": "Copy to staging",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "v_date": {
+        "type": "String",
+        "defaultValue": "2024-01"
+      },
+      "v_end_date": {
+        "type": "String"
+      }
+    }
+  }
+}
