@@ -1,21 +1,117 @@
 {
   "name": "{{Dataset_Name}}",
   "compatibilityLevel": 1604,
-  "createdTimestamp": "2021-02-12T23:00:58.41+00:00",
-  "lastUpdate": "2024-09-21T04:50:00.113+00:00",
-  "lastSchemaUpdate": "2022-09-13T21:02:37.603+00:00",
-  "lastProcessed": "1699-12-31T00:00:00+00:00",
   "model": {
     "name": "{{Dataset_Name}}",
     "culture": "en-US",
     "collation": "Latin1_General_100_BIN2_UTF8",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
     "defaultPowerBIDataSourceVersion": "powerBI_V3",
-    "modifiedTime": "2021-02-12T23:01:39.28",
-    "structureModifiedTime": "2021-02-12T23:00:58.617",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "taxi_zone_lookup",
+        "sourceLineageTag": "[staging].[taxi_zone_lookup]",
+        "columns": [
+          {
+            "name": "LocationID",
+            "dataType": "string",
+            "sourceColumn": "LocationID",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "LocationID",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Borough",
+            "dataType": "string",
+            "sourceColumn": "Borough",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Borough",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Zone",
+            "dataType": "string",
+            "sourceColumn": "Zone",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Zone",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "service_zone",
+            "dataType": "string",
+            "sourceColumn": "service_zone",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "service_zone",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Dataset_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "taxi_zone_lookup",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "staging"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DatabaseQuery",
+        "kind": "m",
+        "expression": "let\n    database = {{TDS_Endpoint}}\nin\n    database\n"
+      }
+    ],
     "annotations": [
       {
         "name": "__PBI_TimeIntelligenceEnabled",
         "value": "0"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"exec_requests_history\",\"long_running_queries\",\"frequently_run_queries\",\"exec_sessions_history\",\"taxi_zone_lookup\"]"
+      },
+      {
+        "name": "SourceLineageTagType",
+        "value": "DatabaseFullyQualifiedName"
       }
     ]
   }
