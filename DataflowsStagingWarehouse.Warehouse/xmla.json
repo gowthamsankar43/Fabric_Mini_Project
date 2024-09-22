@@ -13,8 +13,184 @@
     "sourceQueryCulture": "en-US",
     "tables": [
       {
-        "name": "5c4195ebb62b4d529aec8cc43342aee9_66d5068a_002D84db_002D4ed8_002D81af_002Da6e52aa99b9f",
-        "sourceLineageTag": "[dbo].[5c4195ebb62b4d529aec8cc43342aee9_66d5068a_002D84db_002D4ed8_002D81af_002Da6e52aa99b9f]",
+        "name": "1f2f58428d0744489012930805ce001d_0dea497c_002D0163_002D4baa_002D91d3_002D0ce5877d9f2a",
+        "sourceLineageTag": "[dbo].[1f2f58428d0744489012930805ce001d_0dea497c_002D0163_002D4baa_002D91d3_002D0ce5877d9f2a]",
+        "columns": [
+          {
+            "name": "Column1",
+            "dataType": "string",
+            "sourceColumn": "Column1",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Column1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column2",
+            "dataType": "dateTime",
+            "sourceColumn": "Column2",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "Column2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column3",
+            "dataType": "dateTime",
+            "sourceColumn": "Column3",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "Column3",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column4",
+            "dataType": "int64",
+            "sourceColumn": "Column4",
+            "formatString": "0",
+            "sourceProviderType": "bigint",
+            "sourceLineageTag": "Column4",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column5",
+            "dataType": "double",
+            "sourceColumn": "Column5",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "Column5",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "Column6",
+            "dataType": "string",
+            "sourceColumn": "Column6",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Column6",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column7",
+            "dataType": "string",
+            "sourceColumn": "Column7",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Column7",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column8",
+            "dataType": "int64",
+            "sourceColumn": "Column8",
+            "formatString": "0",
+            "sourceProviderType": "bigint",
+            "sourceLineageTag": "Column8",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "Column9",
+            "dataType": "double",
+            "sourceColumn": "Column9",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "Column9",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "Column10",
+            "dataType": "string",
+            "sourceColumn": "Column10",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "Column10",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "1f2f58428d0744489012930805ce001d_0dea497c_002D0163_002D4baa_002D91d3_002D0ce5877d9f2a",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "1f2f58428d0744489012930805ce001d_c59f2d3b_002D6078_002D4b9c_002D9c84_002D623557ae93f0",
+        "sourceLineageTag": "[dbo].[1f2f58428d0744489012930805ce001d_c59f2d3b_002D6078_002D4b9c_002D9c84_002D623557ae93f0]",
         "columns": [
           {
             "name": "Column1",
@@ -184,187 +360,11 @@
         ],
         "partitions": [
           {
-            "name": "{{Dataset_Name}}",
+            "name": "{{Partition_Name}}",
             "mode": "directLake",
             "source": {
               "type": "entity",
-              "entityName": "5c4195ebb62b4d529aec8cc43342aee9_66d5068a_002D84db_002D4ed8_002D81af_002Da6e52aa99b9f",
-              "expressionSource": "DatabaseQuery",
-              "schemaName": "dbo"
-            }
-          }
-        ],
-        "annotations": [
-          {
-            "name": "IsTableInBiModel",
-            "value": "False"
-          }
-        ]
-      },
-      {
-        "name": "5c4195ebb62b4d529aec8cc43342aee9_72912a0a_002D7cc6_002D4656_002Da9c9_002Ddbfdb7596b2c",
-        "sourceLineageTag": "[dbo].[5c4195ebb62b4d529aec8cc43342aee9_72912a0a_002D7cc6_002D4656_002Da9c9_002Ddbfdb7596b2c]",
-        "columns": [
-          {
-            "name": "Column1",
-            "dataType": "string",
-            "sourceColumn": "Column1",
-            "sourceProviderType": "varchar",
-            "sourceLineageTag": "Column1",
-            "summarizeBy": "none",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column2",
-            "dataType": "dateTime",
-            "sourceColumn": "Column2",
-            "formatString": "General Date",
-            "sourceProviderType": "date",
-            "sourceLineageTag": "Column2",
-            "summarizeBy": "none",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column3",
-            "dataType": "dateTime",
-            "sourceColumn": "Column3",
-            "formatString": "General Date",
-            "sourceProviderType": "date",
-            "sourceLineageTag": "Column3",
-            "summarizeBy": "none",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column4",
-            "dataType": "int64",
-            "sourceColumn": "Column4",
-            "formatString": "0",
-            "sourceProviderType": "bigint",
-            "sourceLineageTag": "Column4",
-            "summarizeBy": "sum",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column5",
-            "dataType": "double",
-            "sourceColumn": "Column5",
-            "sourceProviderType": "float",
-            "sourceLineageTag": "Column5",
-            "summarizeBy": "sum",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              },
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"isGeneralNumber\":true}"
-              }
-            ]
-          },
-          {
-            "name": "Column6",
-            "dataType": "string",
-            "sourceColumn": "Column6",
-            "sourceProviderType": "varchar",
-            "sourceLineageTag": "Column6",
-            "summarizeBy": "none",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column7",
-            "dataType": "string",
-            "sourceColumn": "Column7",
-            "sourceProviderType": "varchar",
-            "sourceLineageTag": "Column7",
-            "summarizeBy": "none",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column8",
-            "dataType": "int64",
-            "sourceColumn": "Column8",
-            "formatString": "0",
-            "sourceProviderType": "bigint",
-            "sourceLineageTag": "Column8",
-            "summarizeBy": "sum",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          },
-          {
-            "name": "Column9",
-            "dataType": "double",
-            "sourceColumn": "Column9",
-            "sourceProviderType": "float",
-            "sourceLineageTag": "Column9",
-            "summarizeBy": "sum",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              },
-              {
-                "name": "PBI_FormatHint",
-                "value": "{\"isGeneralNumber\":true}"
-              }
-            ]
-          },
-          {
-            "name": "Column10",
-            "dataType": "string",
-            "sourceColumn": "Column10",
-            "sourceProviderType": "varchar",
-            "sourceLineageTag": "Column10",
-            "summarizeBy": "none",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ]
-          }
-        ],
-        "partitions": [
-          {
-            "name": "{{Dataset_Name}}",
-            "mode": "directLake",
-            "source": {
-              "type": "entity",
-              "entityName": "5c4195ebb62b4d529aec8cc43342aee9_72912a0a_002D7cc6_002D4656_002Da9c9_002Ddbfdb7596b2c",
+              "entityName": "1f2f58428d0744489012930805ce001d_c59f2d3b_002D6078_002D4b9c_002D9c84_002D623557ae93f0",
               "expressionSource": "DatabaseQuery",
               "schemaName": "dbo"
             }
@@ -389,10 +389,6 @@
       {
         "name": "__PBI_TimeIntelligenceEnabled",
         "value": "0"
-      },
-      {
-        "name": "PBI_QueryOrder",
-        "value": "[\"exec_requests_history\",\"long_running_queries\",\"frequently_run_queries\",\"exec_sessions_history\",\"5c4195ebb62b4d529aec8cc43342aee9_72912a0a_002D7cc6_002D4656_002Da9c9_002Ddbfdb7596b2c\",\"5c4195ebb62b4d529aec8cc43342aee9_66d5068a_002D84db_002D4ed8_002D81af_002Da6e52aa99b9f\"]"
       },
       {
         "name": "SourceLineageTagType",

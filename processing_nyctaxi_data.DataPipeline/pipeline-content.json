@@ -233,7 +233,7 @@
           "scripts": [
             {
               "text": {
-                "value": "SELECT TOP(1) \nlast_processed_pickup_date\nfrom metadata.process_log\nwhere table_processed='Yellow_Taxi_NYC'\norder by last_processed_pickup_date desc",
+                "value": "SELECT COALESCE(\n    (SELECT TOP 1 last_processed_pickup_date\n     FROM metadata.process_log\n     WHERE table_processed = 'Yellow_Taxi_NYC'\n     ORDER BY last_processed_pickup_date DESC),\n    '2023-12-01'\n)AS last_processed_pickup_date;",
                 "type": "Expression"
               },
               "type": "Query"
