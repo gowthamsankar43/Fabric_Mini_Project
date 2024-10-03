@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "connectadls"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "279d51de-051b-4360-841a-40d145887f62"
+  }
+}

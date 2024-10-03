@@ -333,13 +333,110 @@
         ],
         "partitions": [
           {
-            "name": "{{Dataset_Name}}",
+            "name": "{{Partition_Name}}",
             "mode": "directLake",
             "source": {
               "type": "entity",
               "entityName": "Yellow_Taxi_NYC",
               "expressionSource": "DatabaseQuery",
               "schemaName": "staging"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "False"
+          }
+        ]
+      },
+      {
+        "name": "process_log",
+        "sourceLineageTag": "[metadata].[process_log]",
+        "columns": [
+          {
+            "name": "pipeline_run_id",
+            "dataType": "string",
+            "sourceColumn": "pipeline_run_id",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "pipeline_run_id",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "table_processed",
+            "dataType": "string",
+            "sourceColumn": "table_processed",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "table_processed",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "rows_processed",
+            "dataType": "int64",
+            "sourceColumn": "rows_processed",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "rows_processed",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "last_processed_pickup_date",
+            "dataType": "dateTime",
+            "sourceColumn": "last_processed_pickup_date",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "last_processed_pickup_date",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "processed_tmstmp",
+            "dataType": "dateTime",
+            "sourceColumn": "processed_tmstmp",
+            "formatString": "General Date",
+            "sourceProviderType": "datetime2",
+            "sourceLineageTag": "processed_tmstmp",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "process_log",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "metadata"
             }
           }
         ],
@@ -413,7 +510,7 @@
         ],
         "partitions": [
           {
-            "name": "{{Dataset_Name}}",
+            "name": "{{Partition_Name}}",
             "mode": "directLake",
             "source": {
               "type": "entity",
@@ -429,6 +526,195 @@
             "value": "False"
           }
         ]
+      },
+      {
+        "name": "yellow_taxi_fact",
+        "sourceLineageTag": "[dbo].[yellow_taxi_fact]",
+        "columns": [
+          {
+            "name": "vendor",
+            "dataType": "string",
+            "sourceColumn": "vendor",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "vendor",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "tpep_pickup_datetime",
+            "dataType": "dateTime",
+            "sourceColumn": "tpep_pickup_datetime",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "tpep_pickup_datetime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "tpep_dropoff_datetime",
+            "dataType": "dateTime",
+            "sourceColumn": "tpep_dropoff_datetime",
+            "formatString": "General Date",
+            "sourceProviderType": "date",
+            "sourceLineageTag": "tpep_dropoff_datetime",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "pu_borough",
+            "dataType": "string",
+            "sourceColumn": "pu_borough",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "pu_borough",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "pu_zone",
+            "dataType": "string",
+            "sourceColumn": "pu_zone",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "pu_zone",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "do_borough",
+            "dataType": "string",
+            "sourceColumn": "do_borough",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "do_borough",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "do_zone",
+            "dataType": "string",
+            "sourceColumn": "do_zone",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "do_zone",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "payment_method",
+            "dataType": "string",
+            "sourceColumn": "payment_method",
+            "sourceProviderType": "varchar",
+            "sourceLineageTag": "payment_method",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "passenger_count",
+            "dataType": "int64",
+            "sourceColumn": "passenger_count",
+            "formatString": "0",
+            "sourceProviderType": "int",
+            "sourceLineageTag": "passenger_count",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "trip_distance",
+            "dataType": "double",
+            "sourceColumn": "trip_distance",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "trip_distance",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          },
+          {
+            "name": "total_amount",
+            "dataType": "double",
+            "sourceColumn": "total_amount",
+            "sourceProviderType": "float",
+            "sourceLineageTag": "total_amount",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "{{Partition_Name}}",
+            "mode": "directLake",
+            "source": {
+              "type": "entity",
+              "entityName": "yellow_taxi_fact",
+              "expressionSource": "DatabaseQuery",
+              "schemaName": "dbo"
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "IsTableInBiModel",
+            "value": "True"
+          }
+        ]
       }
     ],
     "expressions": [
@@ -442,10 +728,6 @@
       {
         "name": "__PBI_TimeIntelligenceEnabled",
         "value": "0"
-      },
-      {
-        "name": "PBI_QueryOrder",
-        "value": "[\"exec_requests_history\",\"long_running_queries\",\"frequently_run_queries\",\"exec_sessions_history\",\"taxi_zone_lookup\",\"Yellow_Taxi_NYC\"]"
       },
       {
         "name": "SourceLineageTagType",
