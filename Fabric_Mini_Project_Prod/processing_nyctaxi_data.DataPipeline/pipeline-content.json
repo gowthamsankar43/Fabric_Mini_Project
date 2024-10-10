@@ -89,7 +89,14 @@
           "secureOutput": true
         },
         "name": "Copy to staging",
-        "dependsOn": []
+        "dependsOn": [
+          {
+            "activity": "Incremental Months",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
       },
       {
         "type": "SqlServerStoredProcedure",
@@ -159,6 +166,120 @@
         "dependsOn": [
           {
             "activity": "Copy to staging",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "[metadata].[inset_processlog]",
+          "storedProcedureParameters": {
+            "pipeline_run_id": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "processed_date": {
+              "value": {
+                "value": "@pipeline().TriggerTime",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "table_name": {
+              "value": "Yellow_Taxi_NYC",
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+              "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+            },
+            "annotations": []
+          },
+          "name": "Project_Warehouse",
+          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Loading process_log",
+        "dependsOn": [
+          {
+            "activity": "Deleting_Outliers",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "SELECT COALESCE(\n    (SELECT TOP 1 last_processed_pickup_date\n     FROM metadata.process_log\n     WHERE table_processed = 'Yellow_Taxi_NYC'\n     ORDER BY last_processed_pickup_date DESC),\n    '2023-12-01'\n)AS last_processed_pickup_date;",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ]
+        },
+        "linkedService": {
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b",
+              "endpoint": "n4pirizp7goejn7g5hpvn3npga-azjvzoxuqmhe7oe5mym6otifh4.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "ba5c5306-83f4-4f0e-b89d-6619e74d053f"
+            },
+            "annotations": []
+          },
+          "name": "Project_Warehouse",
+          "objectId": "7ac4d9d5-6e95-4d94-b5cb-ed429c4d852b"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Latest_Month_Processed_Data",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "v_date",
+          "value": {
+            "value": "@formatDateTime(addToTime(activity('Latest_Month_Processed_Data').output.resultSets[0].rows[0].last_processed_pickup_date,1,'Month'),'yyyy-MM')",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Incremental Months",
+        "dependsOn": [
+          {
+            "activity": "Latest_Month_Processed_Data",
             "dependencyConditions": [
               "Succeeded"
             ]
